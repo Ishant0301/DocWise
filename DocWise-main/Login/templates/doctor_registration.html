@@ -1,0 +1,88 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Doctor Registration
+{% endblock %}
+{% block page_title %}Doctor Registration{% endblock %}
+{% block content %}
+
+    <div class="logincontainer">
+
+
+            <img src="{% static 'logo1.png' %}" alt="logo" class="icon">
+            <h2 class="headingText">Doctor Registration</h2>
+    
+          <form action="" method="post" class="loginForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div >
+                <input type="text" name="username" placeholder="Username" required class="formfield">
+            </div>
+            
+            <div>
+                <input type="email" name="email" placeholder="Email" required class="formfield">
+            </div>
+    
+            <div>
+                <input type="password" name="password1" placeholder="Password" required class="formfield">
+            </div>
+    
+            <div>
+                <input type="password" name="password2" placeholder="Password confirmation" required class="formfield" >
+            </div>
+            
+            <div class="file-input-container">
+                <label for="license_file" class="file-label">
+                    Doctor license file
+                    <input type="file" id="license_file" name="license_file" accept=".jpg, .jpeg, .png, .pdf" required class="file-input">
+                </label>
+            </div>
+            
+            <div>
+                <select name="speciality" required class="selectfield">
+                    <option value="" disabled selected>Select your specialty</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="Radiology">Radiology</option>
+                    <option value="Oncology">Oncology</option>
+                    <option value="Gastroenterology">Gastroenterology</option>
+                    <option value="Hematology">Hematology</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Nephrology">Nephrology</option>
+                    <option value="Pulmonology">Pulmonology</option>
+                    <option value="Urology">Urology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Rheumatology">Rheumatology</option>
+                    <option value="Infectious Disease">Infectious Disease</option>
+                    <option value="Allergy and Immunology">Allergy and Immunology</option>
+                    <option value="Anesthesiology">Anesthesiology</option>
+                    <option value="Pathology">Pathology</option>
+                    <option value="Psychiatry">Psychiatry</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="Obstetrics and Gynecology">Obstetrics and Gynecology</option>
+                    <option value="Plastic Surgery">Plastic Surgery</option>
+                    <option value="General Surgery">General Surgery</option>
+                    <option value="Thoracic Surgery">Thoracic Surgery</option>
+                    <option value="Vascular Surgery">Vascular Surgery</option>
+                    <option value="Neurosurgery">Neurosurgery</option>
+                    <option value="Pediatric Surgery">Pediatric Surgery</option>
+                    <option value="Trauma Surgery">Trauma Surgery</option>
+                    <option value="Emergency Medicine">Emergency Medicine</option>
+                    <option value="Family Medicine">Family Medicine</option>
+                </select>
+            </div>
+    
+            <div>
+                <input type="submit" value="Sign Up" class="submit-button">
+            </div>            
+        </form>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %} 
+          <p>Already have an accout? <a href="/login">Log in</a></p>
+    
+        </div>
+    </div>
+{% endblock %}

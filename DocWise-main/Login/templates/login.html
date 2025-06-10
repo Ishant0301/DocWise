@@ -1,0 +1,38 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Login
+{% endblock %}
+{% block page_title %}Login{% endblock %}
+
+{% block content %}
+
+  <div class="logincontainer">
+    <img src="{% static 'logo1.png' %}" alt="logo" class="icon">
+    <h2 class="headingText">Login</h2>
+
+    <form action="" method="post" class="loginForm">
+      {% csrf_token %}
+
+      <div>
+        <input type="text" name="username" placeholder="Username" class="formfield">
+      </div>
+
+      <div>
+        <input type="password" name="password" placeholder="••••••••••••" class="formfield">
+      </div>
+
+
+        <input type="submit" value="Login" class="submit-button">
+
+    </form>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+      <p>Dont have an accout? <a href="/signup">Sign up</a></p>
+
+    </div>
+
+  </div>
+
+{% endblock %}
