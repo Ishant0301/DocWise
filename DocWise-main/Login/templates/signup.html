@@ -1,0 +1,47 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  SignUp
+{% endblock %}
+{% block page_title %}SignUp{% endblock %}
+{% block content %}
+
+  <div class="logincontainer">
+    <img src="{% static 'logo1.png' %}" alt="logo" class="icon">
+    <h2 class="headingText">Sign Up</h2>
+
+    <form action="" method="post" class="loginForm">
+      {% csrf_token %}
+
+      <div >
+        <input type="text" name="username" placeholder="Username" class="formfield">
+      </div>
+
+      <div>
+        <input type="email" name="email" placeholder="Email" class="formfield">
+      </div>
+
+      <div>
+        <input type="password" name="password1" placeholder="••••••••••••" class="formfield">
+      </div>
+
+      <div>
+        <input type="password" name="password2" placeholder="••••••••••••" class="formfield"
+      </div>
+
+      <br>
+      <br>
+
+      <input type="submit" value="Sign Up" class="submit-button">
+      
+    </form>
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <p>Already have an account? <a href="/login" class="text-green-400">Log in</a></p>
+
+  </div>
+
+{% endblock %}

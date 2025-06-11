@@ -1,0 +1,121 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block title %}
+  Book Appointment
+{% endblock %}\
+{% block page_title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <h1 class="page-title">Search Doctors</h1>
+    <form id="search-form" class="search-form">
+        <input type="text" id="query" name="query" placeholder="Search by name" class="search-input">
+        <select id="speciality" name="speciality" class="search-select">
+            <option value="">All Specialties</option>
+            {% for value, display in speciality_CHOICES %}
+            <option value="{{ value }}">{{ display }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+    <div id="results" class="results">
+        <!-- Search results will appear here -->
+    </div>
+    <div id="messages" class="messages">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="alert {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#search-form').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "{% url 'search_doctors' %}",
+                data: $(this).serialize(),
+                success: function(data){
+                    var results = data.results;
+                    var resultsDiv = $('#results');
+                    resultsDiv.empty();
+                    if (results.length > 0) {
+                        results.forEach(function(doctor){
+                            var doctorDiv = `<div class="doctor-card">
+                                <h3 class="doctor-name">${doctor.username}</h3>
+                                <h3 class="doctor-email">Email: ${doctor.email}</h3>
+                                <h3 class="doctor-speciality">Specialty: ${doctor.speciality}</h3>
+                                <button class="make-appointment" data-doctor-email="${doctor.email}">Make Appointment</button>
+                            </div>`;
+                            resultsDiv.append(doctorDiv);
+                        });
+                    } else {
+                        resultsDiv.append('<p class="no-results">No doctors found.</p>');
+                    }
+                }
+            });
+        });
+
+        $('#results').on('click', '.make-appointment', function(){
+            var DocMail = $(this).data('doctor-email');
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'make_appointment' %}",
+                data: {
+                    'DocMail': DocMail,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response){
+                    alert('Appointment made successfully!');
+                },
+                error: function(response){
+                    alert('Failed to make appointment.');
+                }
+            });
+        });
+    });
+</script>
+
+{% if messages %}
+<script id="messages-data" type="application/json">
+    {{ messages|json_script:"messages" }}
+</script>
+{% endif %}
+
+<script>
+    $(document).ready(function() {
+        var messages = [];
+        var messagesElement = document.getElementById('messages-data');
+
+        if (messagesElement) {
+            messages = JSON.parse(messagesElement.textContent);
+        }
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        messages.forEach(function(message) {
+            toastr[message.tags](message.message);
+        });
+    });
+</script>
+{% endblock %}
