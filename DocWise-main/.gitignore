@@ -1,0 +1,14 @@
+/db.sqlite3
+/Login/migrations
+/DocWise/__pycache__
+/Login/__pycache__
+/.env
+/ChatbotAndClass/migrations
+/ChatbotAndClass/__pycache__
+/models
+/media
+/client_secret.json
+/gmail_token.json
+/test.py
+/node_modules
+/.venv

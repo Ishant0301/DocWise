@@ -30,7 +30,7 @@ gmail=Gmail()
 
 load_dotenv()
 GenAI.configure(api_key=os.getenv('GEMINI_API_KEY'))
-llm=GenAI.GenerativeModel('gemini-1.5-pro')
+llm=GenAI.GenerativeModel('gemini-2.0-flash')
 os.environ['GOOGLE_API_KEY'] = os.getenv('GOOGLE_API_KEY')
 embeddings=GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
